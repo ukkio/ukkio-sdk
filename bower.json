@@ -1,0 +1,17 @@
+{
+  "name": "ukkio-sdk",
+  "version": "0.0.1",
+  "homepage": "https://github.com/ukkio/ukkio-sdk",
+  "authors": [
+    "matteo@ukk.io"
+  ],
+  "description": "SDK to connect your game to Ukkio",
+  "keywords": [
+    "ukkio",
+    "sdk",
+    "html5",
+    "game",
+    "games"
+  ],
+  "license": "The MIT License (MIT)"
+}
