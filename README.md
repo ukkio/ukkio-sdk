@@ -1,4 +1,3 @@
-
 # Ukkio SDK
 
 SDK to connect your game to Ukkio (http://developer.ukk.io).
@@ -36,39 +35,33 @@ SDK to connect your game to Ukkio (http://developer.ukk.io).
 
 - Start programming!
 
-## Understand the game life cycle
+## Understanding the game life cycle
 
 In Ukkio the games must be designed to work with coin, in other words you earn money every time a player insert a coin. This is by design.
-The main target of SDK is to give you a simple way to consume the coins plus some basic feautures that could be ignored depending on the
-type of game you are building. 
+The main target of SDK is to give you a simple way to consume the coins plus some basic feautures that could be ignored depending on the type of game you are building. 
 
 SDK are based on events. There are several types of events that comes from Ukkio (`newGame`, `pause`, `unpause`, `changeViewport`) and 
 a few methods (`ready`, `insertCoin`, `gameOver`, `exit`) that let you send and retrive data (`saveSession`, `loadSession`, `saveStorage`, `loadStorage`).
 
-When a player start your game Ukkio create an iframe on the page, that cover any UI element on the window, and execute your script.
-After loaded all your stuff you have to say to Ukkio - Hey, I'm `ready`! - using the `ready()` function. Ukkio responds with the `newGame`
-events. From now on you are ready to ask to the player to insert coin using `insertCoin()`, many kind of things could happen after this call: 
+When a player start your game, Ukkio creates an iframe on the page, that cover any UI element on the window, and executes your script.
+After all your stuff are loaded, you have to say to Ukkio - Hey, I'm `ready`! - using the `ready()` function. Ukkio responds with the `newGame` events. From now on you are ready to ask the player to insert coin using `insertCoin()`, many kind of things could happen after this call: 
 
-1. The user accept (`success`)
-2. The user reject (`cancel`)
+1. The user accepts (`success`)
+2. The user rejects (`cancel`)
 3. The user has no coins (`failure`)
 
 You have to manage all of them. 
 
-For simplicity we go for the first case. The game started and after some levels he lost, now you have to tell to Ukkio that the coin is burned 
-using `gameOver()`. Now you can request a new coin to player but if he wants to go back on the game list (remember?) there is no UI on the screen to do so. 
+For simplicity we go for the first case. The game started and after some levels he losts, now you have to tell Ukkio that the coin is burned using `gameOver()`. Now you can request a new coin to the player, but if he wants to go back on the games list (remember?) there is no UI on the screen to do so. 
 Here is where you come in for help drawing a (what you want) button that calls `exit()`.
 
-That would be enough for a certain types of games but if you want let the player to continue from a certain point you need a way to save data. 
+That would be enough for a certain types of games, but if you want to let the player to continue from a certain point, you need a way to save data. 
 HTML5 has localStorage but it lives only on the device in use. Not enough for a cool HTML5 game. 
-Ukkio provide two methods: `saveStorage` and `loadStorage`. With them you can save and retrive an object from any device. 
+Ukkio provides two methods: `saveStorage` and `loadStorage`. With them you can save and retrive an object from any device. 
 Storage is unique for the couple: player, game. Oh..they work off-line too, look bottom for more informations.
 
-Ukkio has another couple of things to deliver a great user experience: `pause` and `unpause`. Imagine the case when you are playing the
-the latest browser's game (Galaga) at the office (Helicarrier) and your boss (Tony Stark) knocks on the door and you quickly press 
-CMD+TAB (ALT+TAB for others). What happend to your game (Game over!)? 
-To avoid this catastrophic scenario Ukkio send a `pause` events when window lost the focus. Pause has a callback that accept a data object
-that is stored first on the localStorage and then on the server. So you can close browser and continue the game more late (when Tony is gone away).
+Ukkio has another couple of things to deliver a great user experience: `pause` and `unpause`. Imagine the case when you are playing the latest browser's game (Galaga) at the office (Helicarrier) and your boss (Tony Stark) knocks on the door and you quickly press CMD+TAB (ALT+TAB for others). What happend to your game (Game over!)? 
+To avoid this catastrophic scenario Ukkio sends a `pause` event when window lost the focus. Pause has a callback that accept a data object that is stored first on the localStorage and then on the server. So you can close browser and continue the game more late (when Tony is gone away).
 `unpause`, instead, is triggered when window gets the focus. All previously stored data are passed as parameter. If you want to read or write
 pause and unpause data at anytime you can use `saveSession()` and `loadSession()` but be careful, that data lives like a coin. 
 When you call `gameOver()` session is deleted immediatly.
