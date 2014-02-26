@@ -16,12 +16,6 @@ SDK to connect your game to Ukkio (http://developer.ukk.io).
 	```js
 	bower install ukkio-sdk
 	```
-	
-	or
-
-	```js
-	npm install ukkio-sdk
-	```
 
 	or clone the git repository
 
@@ -271,12 +265,54 @@ or the player will lose the game's status.
 
 ### saveStorage(data, callback)
 
+Saves `data` to the persistent storage. Ukkio saves `data` in the localStorage and then pushes it to the server. 
+Persistent storage is unique for the player. Any call of `saveStorage()` will overwrite old data. 
+`Callback` has no parameters.
+
+```js
+function onGameOver() {
+	ukkio.loadStorage(function (data) {
+		var hiscore = score > data.hiscore ? score : data.hiscore;
+		ukkio.saveStorage({ hiscore: hiscore }, function() {
+			mainMenu();
+		});
+	});
+}
+```
+
 ### loadStorage(callback)
 
+Loads data from the persistent storage. `callback(data)` first parameter contains stored data.
+
+```js
+ukkio.loadStorage(function (data) {
+	highscoreText.text = data.hiscore;
+});
+```
 ### saveSession(data, callback)
+
+Saves `data` to the session. Session is where Ukkio saves data that lives one game life cycle 
+(for more informations refer the "Understand the game life cycle").
+
+```js
+ukkio.saveSession(function (data) {
+	highscoreText.text = data.hiscore;
+});
+```
 
 ### loadSession(data)
 
+Loads data from the session. `callback(data)` first parameter contains stored data.
+
+```js
+ukkio.loadSession(function (data) {
+	hero.x = data.hero.x;
+	hero.y = data.hero.y;
+	hero.z = data.hero.z;
+	hero.angle = data.hero.angle;
+	inventory = data.inventory;
+});
+```
 
 ## References
 
