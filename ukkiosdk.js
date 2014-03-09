@@ -200,18 +200,15 @@ UkkioSDK.prototype.initialize = function initialize(options) {
 		self.options = options;
 
 	if (!self.options.origin) {
-		self.options.origin = window.location.protocol + '//' + window.location.host;
+		self.options.origin = window.location.protocol + '//' + window.location.hostname;
 		if (parseInt(window.location.port) != 80)
 			self.options.origin += ':' + window.location.port;
 	}
 
 	if (!self.options.destination) {
-		self.options.destination = window.location.protocol + '//' + window.location.hostname + ':' + (parseInt(window.location.port) - 1);
-		if (parseInt(window.location.port) != 80)
-			self.options.destination += ':' + (parseInt(window.location.port) - 1);
+		self.options.destination = window.location.protocol + '//' + window.location.hostname;
+		self.options.destination += ':' + (parseInt(window.location.port) - 1);
 	}
-
-	console.log(self.options);
 
 	self._postMessage = new PostMessage({
 		name: 'client',
